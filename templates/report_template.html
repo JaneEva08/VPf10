@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<style>
+  @page { size: A4; margin: 18mm; }
+  body { font-family: "DejaVu Sans", Arial, sans-serif; color: #2d3748; font-size: 11pt; }
+  .header { background: #667eea; color: #fff; padding: 16px 20px; border-radius: 8px; }
+  .header h1 { margin: 0 0 4px; font-size: 20pt; }
+  .header small { opacity: .9; }
+  .card { background: #f7fafc; border-left: 4px solid #667eea; padding: 12px 16px;
+          margin-top: 14px; page-break-inside: avoid; }
+  .card h2 { margin: 0 0 8px; font-size: 11pt; color: #5a67d8; text-transform: uppercase; }
+  .client { font-size: 15pt; font-weight: bold; }
+  .badge { background: #e6fffa; color: #2c7a7b; font-size: 9pt; padding: 2px 8px;
+           border-radius: 10px; margin-left: 8px; font-weight: normal; }
+  .highlight { background: #fefcbf; border: 1px solid #ecc94b; border-radius: 6px; padding: 8px 12px; }
+  ul { list-style: none; padding: 0; margin: 0; }
+  li { padding: 5px 0; border-bottom: 1px solid #e2e8f0; }
+  li:before { content: "✓ "; color: #5a67d8; }
+</style>
+</head>
+<body>
+  <div class="header">
+    <h1>Отчёт по диалогу с клиентом</h1>
+    <small>Дата генерации: {{ generation_date }}</small>
+  </div>
+
+  <div class="card">
+    <span class="client">{{ client_name }}</span><span class="badge">{{ mood }}</span>
+  </div>
+
+  <div class="card"><h2>Тема разговора</h2>{{ topic }}</div>
+
+  <div class="card"><h2>Основной запрос</h2>
+    <div class="highlight"><b>Запрос клиента:</b><br>{{ main_request }}</div>
+  </div>
+
+  <div class="card"><h2>Желаемые сроки и стоимость</h2>{{ deadline_budget }}</div>
+
+  {% if image_path %}
+  <div class="card"><h2>Пример дизайна</h2>
+    <img src="{{ image_path }}" style="width:100%; border-radius:6px;">
+  </div>
+  {% endif %}
+
+  <div class="card"><h2>Рекомендуемые следующие шаги</h2>
+    <ul>
+    {% for step in next_steps.split('\n') if step.strip() %}
+      <li>{{ step.strip() }}</li>
+    {% else %}
+      <li>Связаться с клиентом для уточнения деталей</li>
+    {% endfor %}
+    </ul>
+  </div>
+</body>
+</html>
